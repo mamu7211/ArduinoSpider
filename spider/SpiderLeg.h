@@ -17,7 +17,15 @@ class SpiderLeg {
 
   // Methods --------------------------
   public:
+  void calibrate();
   void ease();
+  void stand();
+  void prepare();
+  void up();
+  void forward();  
+  void back();
+
+  void forwardMotion();
 
   // Static Factory Methods
   public:

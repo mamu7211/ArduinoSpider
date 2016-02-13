@@ -1,18 +1,54 @@
 
-#include "SpiderLeg.h"
+#include "Spider.h"
 
-SpiderLeg *frontRight;
-SpiderLeg *frontLeft;
+Spider *spider;
 
 void setup() {
   Serial.begin(9600);
-  frontRight = SpiderLeg::createRightLeg("FRONT",22);
-  frontLeft = SpiderLeg::createLeftLeg("FRONT",26);
+  spider = Spider::create();
+  spider->ease();
+  delay(1000);
+  spider->prepare();
+  delay(1000);
+  spider->stand();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  frontRight->ease();
-  frontLeft->ease();
-  delay(1000);
+
+  if (Serial.available()) {
+    String cmd = Serial.readString();
+    cmd.trim();
+    cmd.toLowerCase();
+    Serial.println("CMD = " + cmd);
+    
+    if (cmd.equals("cal")) {
+      spider->calibrate();
+    }
+
+    if (cmd.equals("eas")) {
+      spider->ease();
+    }
+
+    if (cmd.equals("pre")) {
+      spider->prepare();
+    }
+
+    if (cmd.equals("std")) {
+      spider->stand();
+    }
+
+    if (cmd.equals("fwd")) {
+      spider->forward();
+      delay(100);
+      spider->forward();
+      delay(100);
+      spider->forward();
+      delay(100);
+      spider->forward();
+      delay(100);
+      spider->forward();
+      delay(100);
+    }
+  }
+  delay(10);
 }
