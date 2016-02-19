@@ -6,13 +6,13 @@
  * Creates a SpiderLeg instance.
  */
 SpiderLeg::SpiderLeg(String prefix, int firstPin, bool isInverted) {
-  servoTip = SpiderServo::create(prefix + "_TIP", firstPin, isInverted);
+  servoTip = SpiderServo::create(prefix + "_TIP", firstPin, !isInverted);
   servoMid = SpiderServo::create(prefix + "_MID", firstPin+1, isInverted);
   servoRotate = SpiderServo::create(prefix + "_ROT", firstPin+2, isInverted);
 
-  servoTip->setBounds(10,170);
-  servoMid->setBounds(10,170);
-  servoRotate->setBounds(70,110);
+  servoTip->setBounds(0,180);
+  servoMid->setBounds(0,180);
+  servoRotate->setBounds(65,115);
 }
 
 /**
@@ -34,8 +34,8 @@ SpiderLeg* SpiderLeg::createRightLeg(String prefix, int firstPin) {
  */
 
  void SpiderLeg::ease() {
-  this->servoTip->setAngle(140);
-  this->servoMid->setAngle(10);
+  this->servoTip->setAngle(90);
+  this->servoMid->setAngle(135);
   this->servoRotate->setAngle(90);
  }
 
@@ -45,15 +45,21 @@ SpiderLeg* SpiderLeg::createRightLeg(String prefix, int firstPin) {
   this->servoRotate->setAngle(90);
  }
 
+void SpiderLeg::storage() {
+  this->servoTip->setAngle(0);
+  this->servoMid->setAngle(90);
+  this->servoRotate->setAngle(90);
+}
+
 void SpiderLeg::prepare() {
-  this->servoTip->setAngle(170);
-  this->servoMid->setAngle(170);
+  this->servoTip->setAngle(0);
+  this->servoMid->setAngle(90);
   this->servoRotate->setAngle(90);
  }
 
  void SpiderLeg::stand() {
-  this->servoTip->setAngle(0);
-  this->servoMid->setAngle(10);
+  this->servoTip->setAngle(145);
+  this->servoMid->setAngle(0);
  }
 
  void SpiderLeg::up() {
@@ -67,6 +73,18 @@ void SpiderLeg::prepare() {
 
  void SpiderLeg::forward() {
   this->servoRotate->setAngle(110);
+ }
+
+ void SpiderLeg::setTip(int angle) {
+  this->servoTip->setAngle(angle);
+ }
+
+ void SpiderLeg::setMid(int angle) {
+  this->servoMid->setAngle(angle);
+ }
+
+ void SpiderLeg::setRotate(int angle) {
+  this->servoRotate->setAngle(angle);
  }
 
 void SpiderLeg::forwardMotion() {

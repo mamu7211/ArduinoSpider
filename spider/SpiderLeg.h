@@ -19,11 +19,17 @@ class SpiderLeg {
   public:
   void calibrate();
   void ease();
+  void storage();
+  
   void stand();
   void prepare();
   void up();
   void forward();  
   void back();
+
+  void setTip(int angle);
+  void setMid(int);
+  void setRotate(int);
 
   void forwardMotion();
 
