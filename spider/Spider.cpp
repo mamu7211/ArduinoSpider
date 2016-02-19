@@ -69,19 +69,19 @@ void Spider::ease(){
 
 void Spider::prepare(){
   _frontRight->prepare();
-  delay(250);
   _frontLeft->prepare();
-  delay(250);
   _midRight->prepare();
-  delay(250);
   _midLeft->prepare();
-  delay(250);
   _backRight->prepare();
-  delay(250);
   _backLeft->prepare();
 }
 
 void Spider::stand(){
+  delay(50);
+  _backRight->stand();
+  delay(50);
+  _backLeft->stand();
+  delay(250);
   _frontRight->stand();
   delay(50);
   _frontLeft->stand();
@@ -89,10 +89,7 @@ void Spider::stand(){
   _midRight->stand();
   delay(50);
   _midLeft->stand();
-  delay(50);
-  _backRight->stand();
-  delay(50);
-  _backLeft->stand();
+
 }
 
 void Spider::storage() {
