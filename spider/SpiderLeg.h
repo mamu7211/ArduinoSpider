@@ -22,6 +22,7 @@ class SpiderLeg {
   void storage();
   
   void stand();
+  void halfStand();
   void prepare();
   void up();
   void forward();  
@@ -30,6 +31,12 @@ class SpiderLeg {
   void setTip(int angle);
   void setMid(int);
   void setRotate(int);
+  void update(int deltaT);
+  void updateTip(int deltaT);
+  void updateMid(int deltaT);
+  void updateRotate(int deltaT);
+
+  bool isMotionFinished();
 
   void forwardMotion();
 

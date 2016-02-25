@@ -62,6 +62,11 @@ void SpiderLeg::prepare() {
   this->servoMid->setAngle(0);
  }
 
+ void SpiderLeg::halfStand() {
+  this->servoMid->setAngle(120);
+  this->servoTip->setAngle(40);
+ }
+
  void SpiderLeg::up() {
   this->servoTip->setAngle(160);
   this->servoMid->setAngle(160);
@@ -86,6 +91,30 @@ void SpiderLeg::prepare() {
  void SpiderLeg::setRotate(int angle) {
   this->servoRotate->setAngle(angle);
  }
+
+ void SpiderLeg::update(int deltaT) {
+  updateTip(deltaT);
+  updateMid(deltaT);
+  updateRotate(deltaT);
+ }
+
+void SpiderLeg::updateTip(int deltaT) {
+  this->servoTip->update(deltaT);  
+}
+
+void SpiderLeg::updateMid(int deltaT) {
+  this->servoMid->update(deltaT);
+}
+
+void SpiderLeg::updateRotate(int deltaT) {
+  this->servoRotate->update(deltaT);
+}
+
+bool SpiderLeg::isMotionFinished() {
+  return this->servoTip->isMotionFinished() &&
+    this->servoMid->isMotionFinished() &&
+    this->servoRotate->isMotionFinished();
+}
 
 void SpiderLeg::forwardMotion() {
   up();

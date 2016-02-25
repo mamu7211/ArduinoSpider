@@ -18,7 +18,9 @@ class SpiderServo {
   private:
   Servo _servo;
   String _name;
-  int _desiredAngle = 0;
+  int _desiredAngle = 90;
+  int _currentAngle = 90;
+  int _angleTreshold = 5;
   int _pin = -1;
   int _minAngle = 5;
   int _maxAngle = 170;
@@ -27,6 +29,8 @@ class SpiderServo {
   // Methods
   public:
   void setAngle(int angle);
+  void update(int deltaT);
   void setBounds(int minAngle, int maxAngle);
+  bool isMotionFinished();
 };
 

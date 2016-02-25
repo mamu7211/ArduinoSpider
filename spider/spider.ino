@@ -6,11 +6,15 @@ void setup() {
   Serial.begin(9600);
   spider = Spider::create();
   spider->ease();
-  delay(1000);
 }
 
 void loop() {
+  spider->updateSequence();
+  spider->update(0);
+  commands();
+}
 
+void commands() {
   if (Serial.available()) {
     String cmd = Serial.readStringUntil(':');
     cmd.toLowerCase();
@@ -30,8 +34,13 @@ void loop() {
       select(cmd);
     }else if(cmd.startsWith("t") || cmd.startsWith("m") || cmd.startsWith("r")) {
       set(cmd);
+    }else if(cmd.startsWith("hs")) {
+      spider->halfStandLeft();
     }
   }
+
+  spider->update(10);
+  //delay(10);
 }
 
 void select(String cmd) {
@@ -67,41 +76,3 @@ void wave(String cmd) {
   spider->wave();
 }
 
-void obs(){
-  if (Serial.available()) {
-    String cmd = Serial.readString();
-    cmd.trim();
-    cmd.toLowerCase();
-    Serial.println("CMD = " + cmd);
-    
-    if (cmd.equals("cal")) {
-      spider->calibrate();
-    }
-
-    if (cmd.equals("eas")) {
-      spider->ease();
-    }
-
-    if (cmd.equals("pre")) {
-      spider->prepare();
-    }
-
-    if (cmd.equals("std")) {
-      spider->stand();
-    }
-
-    if (cmd.equals("fwd")) {
-      spider->forward();
-      delay(100);
-      spider->forward();
-      delay(100);
-      spider->forward();
-      delay(100);
-      spider->forward();
-      delay(100);
-      spider->forward();
-      delay(100);
-    }
-  }
-  delay(10);
-}

@@ -12,6 +12,7 @@ class Spider {
     SpiderLeg* _midLeft;
     SpiderLeg* _backRight;
     SpiderLeg* _backLeft;
+    String _sequence = "ease";
     
     Spider();
 
@@ -23,11 +24,19 @@ class Spider {
     void ease();
     void storage();
     void stand();
+    void standBack();
+    void standFront();
+    void halfStandRight();
+    void halfStandLeft();
     void prepare();
     void forward();
 
     void wave();
     
     void selectLeg(int legNumber);
+
+    void update(int deltaT);
+    bool isMotionFinished();
+    void updateSequence();
 };
 

@@ -5,11 +5,8 @@ Spider::Spider() {
   _frontRight = SpiderLeg::createRightLeg("FRONT",22);
   _midRight = SpiderLeg::createRightLeg("MID",25);
   _backRight = SpiderLeg::createRightLeg("BACK",28);
-  
   _frontLeft = SpiderLeg::createLeftLeg("FRONT",31);
-  
   _midLeft = SpiderLeg::createLeftLeg("MID",34);
-  
   _backLeft = SpiderLeg::createLeftLeg("BACK",37);
 
   _legs[0] = _frontRight;
@@ -27,6 +24,94 @@ Spider* Spider::create() {
   return spider;
 }
 
+void Spider::updateSequence() {
+
+  if (!isMotionFinished()) {
+    return;
+  }
+
+  if (_sequence.equals("ease")) {
+    _sequence = "prepare";
+    prepare();
+  }else if (_sequence.equals("prepare")) {
+    _sequence = "standback";
+    standBack();
+  }else if(_sequence.equals("standback")) {
+    _sequence = "standfront";
+    standFront();
+  }else if(_sequence.equals("standfront")) {
+    _sequence = "stand";
+    stand();
+  }else if(_sequence.equals("stand")) {
+    _sequence = "standleft";
+    halfStandLeft();
+  }else if(_sequence.equals("standleft")) {
+    halfStandRight();
+    _sequence = "standright";
+  }else if(_sequence.equals("standright")) {
+    halfStandLeft();
+    _sequence = "standleft";
+  }
+  delay(150);
+}
+
+bool Spider::isMotionFinished() {
+  return _frontRight->isMotionFinished() &&
+    _frontLeft->isMotionFinished() &&
+    _backRight->isMotionFinished() &&
+    _backLeft->isMotionFinished() &&
+    _midRight->isMotionFinished() &&
+    _midLeft->isMotionFinished();
+}
+
+
+void Spider::update(int deltaT) {
+
+  _frontRight->updateRotate(deltaT);
+  _frontLeft->updateRotate(deltaT);
+  _backRight->updateRotate(deltaT);
+  _backLeft->updateRotate(deltaT);
+  _midRight->updateRotate(deltaT);
+  _midLeft->updateRotate(deltaT);
+
+  
+  _frontRight->updateTip(deltaT);
+  _frontLeft->updateTip(deltaT);
+  _backRight->updateTip(deltaT);
+  _backLeft->updateTip(deltaT);
+  _midRight->updateTip(deltaT);
+  _midLeft->updateTip(deltaT);
+
+  
+  _frontRight->updateMid(deltaT);
+  _frontLeft->updateMid(deltaT);
+  _backRight->updateMid(deltaT);
+  _backLeft->updateMid(deltaT);
+  _midRight->updateMid(deltaT);
+  _midLeft->updateMid(deltaT);
+}
+
+
+void Spider::halfStandRight() {
+  _frontRight->halfStand();
+  _midRight->halfStand();
+  _backRight->halfStand();
+
+  _frontLeft->stand();
+  _midLeft->stand();
+  _backLeft->stand();
+}
+
+void Spider::halfStandLeft() {
+  _frontLeft->halfStand();
+  _midLeft->halfStand();
+  _backLeft->halfStand();
+  
+  _frontRight->stand();
+  _midRight->stand();
+  _backRight->stand();
+}
+
 void Spider::selectLeg(int leg) {
   int selection = constrain(leg,0,5);
   _selectedLeg = _legs[selection];
@@ -41,29 +126,19 @@ void Spider::wave() {
 
 void Spider::calibrate(){
   _frontRight->calibrate();
-    delay(250);
   _frontLeft->calibrate();
-    delay(250);
   _midRight->calibrate();
-    delay(250);
   _midLeft->calibrate();
-    delay(250);
   _backRight->calibrate();
-    delay(250);
   _backLeft->calibrate();
 }
 
 void Spider::ease(){
   _frontRight->ease();
-  delay(500);
   _frontLeft->ease();
-    delay(500);
   _midRight->ease();
-    delay(500);
   _midLeft->ease();
-    delay(500);
   _backRight->ease();
-    delay(500);
   _backLeft->ease();
 }
 
@@ -77,19 +152,22 @@ void Spider::prepare(){
 }
 
 void Spider::stand(){
-  delay(50);
   _backRight->stand();
-  delay(50);
   _backLeft->stand();
-  delay(250);
   _frontRight->stand();
-  delay(50);
   _frontLeft->stand();
-  delay(50);
   _midRight->stand();
-  delay(50);
   _midLeft->stand();
+}
 
+void Spider::standBack() {
+  _backRight->stand();
+  _backLeft->stand();
+}
+
+void Spider::standFront() {
+  _frontRight->stand();
+  _frontLeft->stand();
 }
 
 void Spider::storage() {
