@@ -9,9 +9,9 @@ void setup() {
 }
 
 void loop() {
-  spider->updateSequence();
+  //spider->updateSequence();
   spider->update(0);
-  commands();
+  //commands();
 }
 
 void commands() {
