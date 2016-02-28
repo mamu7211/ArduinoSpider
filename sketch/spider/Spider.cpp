@@ -2,12 +2,18 @@
 #include <Arduino.h>
 
 Spider::Spider() {
-  _frontRight = SpiderLeg::createRightLeg("FRONT",22);
-  _midRight = SpiderLeg::createRightLeg("MID",25);
-  _backRight = SpiderLeg::createRightLeg("BACK",28);
-  _frontLeft = SpiderLeg::createLeftLeg("FRONT",31);
-  _midLeft = SpiderLeg::createLeftLeg("MID",34);
-  _backLeft = SpiderLeg::createLeftLeg("BACK",37);
+  _frontRight = SpiderLeg::createRightLeg("FRONT",37);
+  delay(250);
+  _midRight = SpiderLeg::createRightLeg("MID",34);
+  delay(250);
+  _backRight = SpiderLeg::createRightLeg("BACK",31);
+  delay(250);
+  _frontLeft = SpiderLeg::createLeftLeg("FRONT",28);
+  delay(250);
+  _midLeft = SpiderLeg::createLeftLeg("MID",25);
+  delay(250);
+  _backLeft = SpiderLeg::createLeftLeg("BACK",22);
+  delay(250);
 
   _legs[0] = _frontRight;
   _legs[1] = _frontLeft;

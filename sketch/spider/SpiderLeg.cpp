@@ -6,9 +6,9 @@
  * Creates a SpiderLeg instance.
  */
 SpiderLeg::SpiderLeg(String prefix, int firstPin, bool isInverted) {
-  servoTip = SpiderServo::create(prefix + "_TIP", firstPin, !isInverted);
+  servoTip = SpiderServo::create(prefix + "_TIP", firstPin+2, !isInverted);
   servoMid = SpiderServo::create(prefix + "_MID", firstPin+1, isInverted);
-  servoRotate = SpiderServo::create(prefix + "_ROT", firstPin+2, isInverted);
+  servoRotate = SpiderServo::create(prefix + "_ROT", firstPin, isInverted);
 
   servoTip->setBounds(0,180);
   servoMid->setBounds(0,180);

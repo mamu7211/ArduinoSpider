@@ -31,6 +31,7 @@ class Spider {
     void prepare();
     void forward();
 
+    void wiggle();
     void wave();
     
     void selectLeg(int legNumber);

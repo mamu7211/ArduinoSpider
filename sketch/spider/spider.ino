@@ -39,7 +39,7 @@ void commands() {
     }
   }
 
-  spider->update(10);
+  spider->update(1);
   //delay(10);
 }
 
