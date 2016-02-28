@@ -4,45 +4,58 @@
 
 class SpiderLeg {
 
-  // Members --------------------------
+    // Members --------------------------
   private:
-  String name;
-  SpiderServo *servoTip;
-  SpiderServo *servoMid;
-  SpiderServo *servoRotate;
+    String name;
+    int _roll;
+    bool _isInverted;    
+    SpiderServo *servoTip;
+    SpiderServo *servoMid;
+    SpiderServo *servoRotate;
 
-  // Construction ----------------------
-  private: 
-  SpiderLeg(String prefix,int firstPin, bool isInverted);
+    static int SafeTipBounds[][2];
+    static int CenterAngles[][2];
 
-  // Methods --------------------------
+    // Construction ----------------------
+  private:
+    SpiderLeg(String prefix, int firstPin, bool isInverted);
+
+    // Methods --------------------------
+
+  private:
+    void updateBounds();
+    void updateTip(int deltaT);
+    void updateMid(int deltaT);
+    void updateRotate(int deltaT);
+
   public:
-  void calibrate();
-  void ease();
-  void storage();
-  
-  void stand();
-  void halfStand();
-  void prepare();
-  void up();
-  void forward();  
-  void back();
+    void calibrate();
+    void ease();
+    void storage();
+    void diagnostics();
+    void stand();
+    void halfStand();
+    void prepare();
+    void up();
+    void forward();
+    void back();
 
-  void setTip(int angle);
-  void setMid(int);
-  void setRotate(int);
-  void update(int deltaT);
-  void updateTip(int deltaT);
-  void updateMid(int deltaT);
-  void updateRotate(int deltaT);
+    void setTip(int angle);
+    void setMid(int);
+    void setRotate(int);
+    void setRoll(int);
 
-  bool isMotionFinished();
+    void setHeight(int height);
+    
+    void update(int deltaT);
 
-  void forwardMotion();
+    bool isMotionFinished();
 
-  // Static Factory Methods
+    void forwardMotion();
+
+    // Static Factory Methods
   public:
-  static SpiderLeg* createLeftLeg(String prefix, int firstPin);
-  static SpiderLeg* createRightLeg(String prefix, int firstPin);
+    static SpiderLeg* createLeftLeg(String prefix, int firstPin);
+    static SpiderLeg* createRightLeg(String prefix, int firstPin);
 };
 

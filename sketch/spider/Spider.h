@@ -30,9 +30,13 @@ class Spider {
     void halfStandLeft();
     void prepare();
     void forward();
+    void diagnostics();
 
     void wiggle();
     void wave();
+
+    void setHeight(int height);
+    void setRoll(int angle);
     
     void selectLeg(int legNumber);
 
