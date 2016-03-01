@@ -20,15 +20,15 @@ SpiderLeg::SpiderLeg(String prefix, int firstPin, bool isInverted) {
 
   servoRotate->setBounds(65, 115);
   servoRotate = SpiderServo::create(prefix + "-Rotate", firstPin, isInverted, 90);
-  delay(300);
+  delay(500);
 
   servoMid = SpiderServo::create(prefix + "-Mid", firstPin + 1, isInverted, 180);
-  servoMid->setBounds(40, 180);
-  delay(300);
+  servoMid->setBounds(40, 170);
+  delay(500);
 
   servoTip = SpiderServo::create(prefix + "-Tip", firstPin + 2, !isInverted, 180);
-  servoTip->setBounds(0, 180);
-  delay(300);
+  servoTip->setBounds(0, 170);
+  delay(500);
 }
 
 void SpiderLeg::setHeight(int height) {

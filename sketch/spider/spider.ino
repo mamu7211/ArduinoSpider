@@ -5,6 +5,7 @@ Spider *spider;
 void setup() {
   Serial.begin(9600);
   spider = Spider::create();
+  spider->setHeight(100);
 }
 
 void loop() {

@@ -13,7 +13,7 @@ SpiderServo::SpiderServo(String prefix, int pin, bool reverseAngle, int startAng
   _name = prefix + "-Servo";
   _reverseAngle = reverseAngle;
   _servo.attach(pin);
-  _servo.write(getRealAngle(startAngle));
+  setAngleImmed(startAngle);
 }
 
 /**
@@ -25,6 +25,8 @@ void SpiderServo::setAngle(int angle) {
 }
 
 void SpiderServo::setAngleImmed(int angle) {
+  Serial.print("IMMED");
+  Serial.println(angle,DEC);
   _desiredAngle = angle;
   _currentAngle = angle;
   writeAngle(angle);

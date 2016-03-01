@@ -127,7 +127,7 @@
             this._numericBaudRate.Size = new System.Drawing.Size(120, 20);
             this._numericBaudRate.TabIndex = 6;
             this._numericBaudRate.Value = new decimal(new int[] {
-            19600,
+            9600,
             0,
             0,
             0});

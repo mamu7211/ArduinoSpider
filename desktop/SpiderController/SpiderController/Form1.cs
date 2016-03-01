@@ -17,7 +17,7 @@ namespace SpiderController
     {
         Controller _controller;
         DispatcherTimer _timer;
-        int _height = 0;
+        int _height = 100;
         int _roll = 0;
         int _prevRoll = 0;
         int _prevHeight = 0;
@@ -72,7 +72,9 @@ namespace SpiderController
             }
 
             var state = _controller.GetState().Gamepad;
-            _height = (int) ( (32600.0 + state.RightThumbY) / (32600 + 32600.0) * 100.0);
+            var deltaHeight = (int) ( state.RightThumbY / 32600.0 * 25.0);
+            _height += deltaHeight;
+            _height = clamp(_height, 0, 100);
             _roll = (int) ((32600.0 + state.RightThumbX) / (32600 + 32600.0) * 10.0) - 5;
 
             if (_height != _prevHeight || _roll != _prevRoll)
@@ -83,6 +85,11 @@ namespace SpiderController
             }
 
             updateView();
+        }
+
+        private int clamp(int current, int min, int max)
+        {
+            return Math.Max(min, Math.Min(current, max));
         }
 
         private void connectController()
