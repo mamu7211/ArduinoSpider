@@ -4,24 +4,25 @@
 
 class SpiderLeg {
 
-    // Members --------------------------
+    // Attributes =====================================
   private:
     String name;
     int _roll;
-    bool _isInverted;    
+    bool _isInverted;
     SpiderServo *servoTip;
     SpiderServo *servoMid;
     SpiderServo *servoRotate;
 
     static int SafeTipBounds[][2];
-    static int CenterAngles[][2];
 
-    // Construction ----------------------
+    // Construction ===================================
   private:
     SpiderLeg(String prefix, int firstPin, bool isInverted);
+  public:
+    static SpiderLeg* createLeftLeg(String prefix, int firstPin);
+    static SpiderLeg* createRightLeg(String prefix, int firstPin);
 
-    // Methods --------------------------
-
+    // Methods ========================================
   private:
     void updateBounds();
     void updateTip(int deltaT);
@@ -29,33 +30,15 @@ class SpiderLeg {
     void updateRotate(int deltaT);
 
   public:
-    void calibrate();
-    void ease();
-    void storage();
     void diagnostics();
-    void stand();
-    void halfStand();
-    void prepare();
-    void up();
-    void forward();
-    void back();
+    void setHeight(int height);
 
     void setTip(int angle);
     void setMid(int);
     void setRotate(int);
     void setRoll(int);
 
-    void setHeight(int height);
-    
     void update(int deltaT);
-
     bool isMotionFinished();
-
-    void forwardMotion();
-
-    // Static Factory Methods
-  public:
-    static SpiderLeg* createLeftLeg(String prefix, int firstPin);
-    static SpiderLeg* createRightLeg(String prefix, int firstPin);
 };
 

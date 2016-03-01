@@ -4,15 +4,16 @@
 /**
    SpiderServo Factory
 */
-SpiderServo* SpiderServo::create(String prefix, int pin, bool reverseAngle) {
-  SpiderServo *servo =  new SpiderServo(prefix, pin, reverseAngle);
+SpiderServo* SpiderServo::create(String prefix, int pin, bool reverseAngle, int startAngle) {
+  SpiderServo *servo =  new SpiderServo(prefix, pin, reverseAngle, startAngle);
   return servo;
 }
 
-SpiderServo::SpiderServo(String prefix, int pin, bool reverseAngle) {
+SpiderServo::SpiderServo(String prefix, int pin, bool reverseAngle, int startAngle) {
   _name = prefix + "-Servo";
   _reverseAngle = reverseAngle;
   _servo.attach(pin);
+  _servo.write(getRealAngle(startAngle));
 }
 
 /**
@@ -23,22 +24,30 @@ void SpiderServo::setAngle(int angle) {
   constrainDesiredAngle();
 }
 
-void SpiderServo::setDelta(int angle) {
-
+void SpiderServo::setAngleImmed(int angle) {
+  _desiredAngle = angle;
+  _currentAngle = angle;
+  writeAngle(angle);
 }
 
 void SpiderServo::update(int deltaT) {
   constrainDesiredAngle();
 
-  int increment = (_desiredAngle - _currentAngle ) / 10.0f;
+  int increment = _desiredAngle < _currentAngle ? -1 : 1; 
   if ( isMotionFinished() ) {
     return;
   }
-
   _currentAngle += increment;
-  int realAngle = _reverseAngle ? 180 - _currentAngle: _currentAngle;
-  _servo.write(realAngle);
+  writeAngle(_currentAngle);
   delay(deltaT);
+}
+
+void SpiderServo::writeAngle(int angle) {
+  _servo.write(getRealAngle(_currentAngle));
+}
+
+int SpiderServo::getRealAngle(int angle) {
+  return _reverseAngle ? 180 - _currentAngle: _currentAngle;
 }
 
 void SpiderServo::constrainDesiredAngle() {

@@ -3,14 +3,12 @@
 Spider *spider;
 
 void setup() {
-  Serial.begin(19600);
+  Serial.begin(9600);
   spider = Spider::create();
-  spider->ease();
 }
 
 void loop() {
-  //spider->updateSequence();
-  spider->update(0);
+  spider->update(1);
   commands();
 }
 
@@ -22,15 +20,14 @@ void commands() {
     Serial.println("CMD = " + cmd);
     if (cmd.equals("dia")) {
       spider->diagnostics();
-    }else if (cmd.startsWith("height")){
+    } else if (cmd.startsWith("height")) {
       setHeight(cmd);
-    }else if (cmd.startsWith("roll")) {
-      setRoll(cmd);
+    } else if (cmd.startsWith("set")) {
+      set(cmd);
     }
   }
 
   spider->update(1);
-  //delay(10);
 }
 
 void setHeight(String cmd) {
@@ -41,57 +38,28 @@ void setHeight(String cmd) {
   spider->setHeight(height);
 }
 
-void setRoll(String cmd) {
-  int i = 0;
-  String servo = cmd;
-  servo.replace("roll", "");
-  int roll = servo.toInt();
-  spider->setRoll(roll);
-}
-
-
-void doit(String cmd) {
-  int i = 0;
-  String servo = cmd;
-  servo.replace("g", "");
-  for (int i = 0; i < 6; i++) {
-    int angle = servo.toInt();
-    spider->selectLeg(i);
-    spider->_selectedLeg->setTip(angle);
-    spider->_selectedLeg->setMid(angle);
-  }
-}
-
-void select(String cmd) {
-  String leg = cmd;
-  leg.replace("l", "");
-  int legNumber = leg.toInt();
-  spider->selectLeg(legNumber);
-}
-
 void set(String cmd) {
-  String servo = cmd;
   int angle;
-  if (servo.startsWith("t")) {
-    servo.replace("t", "");
-    angle = servo.toInt();
+  if (cmd.startsWith("set-leg ")) {
+    cmd.replace("set-leg", "");
+    cmd.trim();
+    int legNumber = cmd.toInt();
+    spider->selectLeg(legNumber);
+  } else if (cmd.startsWith("set-tip")) {
+    cmd.replace("set-tip", "");
+    cmd.trim();
+    angle = cmd.toInt();
     spider->_selectedLeg->setTip(angle);
-  }
-
-  if (servo.startsWith("m")) {
-    servo.replace("m", "");
-    angle = servo.toInt();
+  } else  if (cmd.startsWith("set-mid")) {
+    cmd.replace("set-mid", "");
+    cmd.trim();
+    angle = cmd.toInt();
     spider->_selectedLeg->setMid(angle);
-  }
-
-  if (servo.startsWith("r")) {
-    servo.replace("r", "");
-    angle = servo.toInt();
+  } else  if (cmd.startsWith("set-rot")) {
+    cmd.replace("set-rot", "");
+    cmd.trim();
+    angle = cmd.toInt();
     spider->_selectedLeg->setRotate(angle);
   }
-}
-
-void wave(String cmd) {
-  spider->wave();
 }
 
