@@ -1,4 +1,5 @@
 #include "SpiderLeg.h"
+#include "SpiderState.h"
 
 class Spider {
     // Attributes =====================================
@@ -11,7 +12,10 @@ class Spider {
     SpiderLeg* _frontLeft;
     SpiderLeg* _backRight;
     SpiderLeg* _backLeft;
-
+    
+    SpiderState _state = Init;
+    SpiderState _lastState = Init;
+    
     // Construction ===================================
   private:
     Spider();
@@ -21,9 +25,20 @@ class Spider {
 
     // Methods ========================================
   public:
-    void diagnostics();
-    void setHeight(int height);
+    // Service
+    void diagnostics();    
+    bool isMotionFinished();
     void selectLeg(int legNumber);
     void update(int deltaT);
+    void updateState();
+    void updatePosition();
+    void setState(SpiderState state);
+    
+    // Action
+    void setHeight(int height);    
+    void prepareToStandUp();
+    void doBootAllUp();
+    void standLow();
+    void standHigh();
 };
 

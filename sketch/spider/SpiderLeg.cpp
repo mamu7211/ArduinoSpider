@@ -31,15 +31,22 @@ SpiderLeg::SpiderLeg(String prefix, int firstPin, bool isInverted) {
   delay(500);
 }
 
+void SpiderLeg::doBootAllUp() {
+  servoRotate->setAngle(90);
+  servoMid->setAngle(170);
+  servoTip->setAngle(170);
+}
+
 void SpiderLeg::setHeight(int height) {
   float factor = constrain(height, 0, 100) / 100.0f;
   int angle = 100 - 60 * factor;
-  servoMid->setAngle(angle);
-  servoTip->setAngle(140 * factor);
+  setMid(angle);
+  setTip(140 * factor);
 }
 
-void SpiderLeg::setRoll(int roll) {
-  //servoMid->setDelta(roll * (_isInverted?-1:1));
+void SpiderLeg::prepareToStandUp() {
+  servoMid->setAngle(180);
+  servoTip->setAngle(20);
 }
 
 void SpiderLeg::diagnostics() {
@@ -93,7 +100,7 @@ void SpiderLeg::update(int deltaT) {
 
 void SpiderLeg::updateBounds() {
 
-  int val = 0;
+  int val = 20;
   int i = 0;
   for (i = 0; i < BOUNDS_SAFETIP; i++) {
     if (this->servoMid->getCurrentAngle() <= SafeTipBounds[i][0]) {

@@ -32,7 +32,9 @@ class SpiderLeg {
   public:
     void diagnostics();
     void setHeight(int height);
-
+    void doBootAllUp();
+    void prepareToStandUp();
+    
     void setTip(int angle);
     void setMid(int);
     void setRotate(int);

@@ -5,12 +5,18 @@ Spider *spider;
 void setup() {
   Serial.begin(9600);
   spider = Spider::create();
+  spider->prepareToStandUp();
+  delay(500);
+  spider->setHeight(0);
+  delay(500);
   spider->setHeight(100);
+  delay(500);
 }
 
 void loop() {
   spider->update(1);
   commands();
+  delay(10);
 }
 
 void commands() {
@@ -19,7 +25,9 @@ void commands() {
     cmd.toLowerCase();
     cmd.trim();
     Serial.println("CMD = " + cmd);
-    if (cmd.equals("dia")) {
+    if (cmd.startsWith("state")) {
+      setState(cmd);
+    } else if (cmd.equals("dia")) {
       spider->diagnostics();
     } else if (cmd.startsWith("height")) {
       setHeight(cmd);
@@ -29,6 +37,29 @@ void commands() {
   }
 
   spider->update(1);
+}
+
+void setState(String cmd) {
+  cmd.replace("state", "");
+  cmd.trim();
+  if (cmd.equals("init")) {
+    spider->setState(Init);
+  }
+  if (cmd.equals("idle")) {
+    spider->setState(Idle);
+  }
+  if (cmd.equals("bootallup")) {
+    spider->setState(BootAllUp);
+  }
+  if (cmd.equals("preparetostandup")) {
+    spider->setState(PrepareToStandUp);
+  }
+  if (cmd.equals("standlow")) {
+    spider->setState(StandLow);
+  }
+  if (cmd.equals("standhigh")) {
+    spider->setState(StandHigh);
+  }
 }
 
 void setHeight(String cmd) {

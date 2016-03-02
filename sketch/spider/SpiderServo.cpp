@@ -21,7 +21,6 @@ SpiderServo::SpiderServo(String prefix, int pin, bool reverseAngle, int startAng
 */
 void SpiderServo::setAngle(int angle) {
   _desiredAngle = angle;
-  constrainDesiredAngle();
 }
 
 void SpiderServo::setAngleImmed(int angle) {
@@ -33,9 +32,7 @@ void SpiderServo::setAngleImmed(int angle) {
 }
 
 void SpiderServo::update(int deltaT) {
-  constrainDesiredAngle();
-
-  int increment = _desiredAngle < _currentAngle ? -1 : 1; 
+  int increment = allowedAngle() < _currentAngle ? -1 : 1; 
   if ( isMotionFinished() ) {
     return;
   }
@@ -52,13 +49,13 @@ int SpiderServo::getRealAngle(int angle) {
   return _reverseAngle ? 180 - _currentAngle: _currentAngle;
 }
 
-void SpiderServo::constrainDesiredAngle() {
-  _desiredAngle = constrain(_desiredAngle, _minAngle, _maxAngle);
+int SpiderServo::allowedAngle() {
+  return constrain(_desiredAngle, _minAngle, _maxAngle);
 }
 
 bool SpiderServo::isMotionFinished() {
-  return _currentAngle >= _desiredAngle - _angleTreshold
-         && _currentAngle <= _desiredAngle + _angleTreshold;
+  return _currentAngle >= allowedAngle() - _angleTreshold
+         && _currentAngle <= allowedAngle() + _angleTreshold;
 }
 
 int SpiderServo::getDesiredAngle() {
@@ -72,7 +69,6 @@ int SpiderServo::getCurrentAngle() {
 void SpiderServo::setBounds(int minAngle, int maxAngle) {
   _minAngle = constrain(min(minAngle, maxAngle), 0, 180);
   _maxAngle = constrain(max(minAngle, maxAngle), 0, 180);
-  constrainDesiredAngle();
 }
 
 void SpiderServo::diagnostics() {

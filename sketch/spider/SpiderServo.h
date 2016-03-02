@@ -12,7 +12,7 @@ class SpiderServo {
     String _name;
     int _desiredAngle = 90;
     int _currentAngle = 90;
-    int _angleTreshold = 1;
+    int _angleTreshold = 0;
     int _pin = -1;
     int _minAngle = 5;
     int _maxAngle = 170;
@@ -26,9 +26,9 @@ class SpiderServo {
 
     // Methods ========================================
   private:
-    void constrainDesiredAngle();
     void writeAngle(int angle);
     int getRealAngle(int angle);
+    int allowedAngle();
     
   public:
     void setAngle(int angle);
