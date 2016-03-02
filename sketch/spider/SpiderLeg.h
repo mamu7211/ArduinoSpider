@@ -40,6 +40,8 @@ class SpiderLeg {
     void setRotate(int);
     void setRoll(int);
 
+    void doRotation(int);
+
     void update(int deltaT);
     bool isMotionFinished();
 };

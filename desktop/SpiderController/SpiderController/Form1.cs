@@ -18,7 +18,7 @@ namespace SpiderController
         Controller _controller;
         DispatcherTimer _timer;
         int _height = 100;
-        int _roll = 0;
+        int _rotation = 0;
         int _prevRoll = 0;
         int _prevHeight = 0;
         bool _canSend = true;
@@ -53,7 +53,7 @@ namespace SpiderController
 
             
             _labelHeightValue.Text = _height.ToString();
-            _labelRollValue.Text = _roll.ToString();
+            _labelRollValue.Text = _rotation.ToString();
         }
 
         private void setupTimer()
@@ -72,16 +72,17 @@ namespace SpiderController
             }
 
             var state = _controller.GetState().Gamepad;
-            var deltaHeight = (int) ( state.RightThumbY / 32600.0 * 25.0);
+            var deltaHeight = (int) ( state.RightThumbY / 32600.0 * 10.0);
+            if (Math.Abs(deltaHeight) < 5) deltaHeight = 0;
             _height += deltaHeight;
             _height = clamp(_height, 0, 100);
-            _roll = (int) ((32600.0 + state.RightThumbX) / (32600 + 32600.0) * 10.0) - 5;
+            _rotation = 90 + (int) ( state.RightThumbX / 32600.0 * 25.0) ;
 
-            if (_height != _prevHeight || _roll != _prevRoll)
+            if (_height != _prevHeight || _rotation != _prevRoll)
             {
                 UpdateSpider();
                 _prevHeight = _height;
-                _prevRoll = _roll;
+                _prevRoll = _rotation;
             }
 
             updateView();
@@ -160,7 +161,7 @@ namespace SpiderController
         {
             if (_serialPort.IsOpen)
             {
-                _serialPort.Write(string.Format("height{0}:roll{1}:", _height,_roll));
+                _serialPort.Write(string.Format("height{0}:rotate{1}:", _height,_rotation));
                 _canSend = false;
             }
         }

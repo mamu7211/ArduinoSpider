@@ -7,7 +7,9 @@ String SPIDER_STATE_ENUM_STRING[] {
   "BOUP",
   "PTSU",
   "STLO",
-  "STHI"
+  "STHI",
+  "ROPL",
+  "ROLE"
 };
 
 #define LEG_COUNT 4
@@ -38,6 +40,12 @@ Spider::Spider() {
 void Spider::setHeight(int height) {
   for (int i = 0; i < LEG_COUNT; i++) {
     _legs[i]->setHeight(height);
+  }
+}
+
+void Spider::setRotation(int rotation) {
+  for (int i = 0; i < LEG_COUNT; i++) {
+    _legs[i]->setRotate(rotation);
   }
 }
 
@@ -90,7 +98,6 @@ void Spider::updateState() {
     Serial.println(":CHST=" + SPIDER_STATE_ENUM_STRING[_state]);
     _lastState = _state;
   }
-
 }
 
 void Spider::updatePosition() {

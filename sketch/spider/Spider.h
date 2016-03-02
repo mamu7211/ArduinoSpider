@@ -36,6 +36,7 @@ class Spider {
     
     // Action
     void setHeight(int height);    
+    void setRotation(int rotation);
     void prepareToStandUp();
     void doBootAllUp();
     void standLow();

@@ -5,12 +5,7 @@ Spider *spider;
 void setup() {
   Serial.begin(9600);
   spider = Spider::create();
-  spider->prepareToStandUp();
-  delay(500);
-  spider->setHeight(0);
-  delay(500);
-  spider->setHeight(100);
-  delay(500);
+  spider->setState(Init);
 }
 
 void loop() {
@@ -20,17 +15,20 @@ void loop() {
 }
 
 void commands() {
-  if (Serial.available()) {
+  if (Serial.available() && spider->isMotionFinished()) {
     String cmd = Serial.readStringUntil(':');
     cmd.toLowerCase();
     cmd.trim();
     Serial.println("CMD = " + cmd);
-    if (cmd.startsWith("state")) {
+    if (cmd.startsWith("dly")) {
+    }else if (cmd.startsWith("state")) {
       setState(cmd);
     } else if (cmd.equals("dia")) {
       spider->diagnostics();
     } else if (cmd.startsWith("height")) {
       setHeight(cmd);
+    } else if (cmd.startsWith("rotate")) {
+      setRotation(cmd);
     } else if (cmd.startsWith("set")) {
       set(cmd);
     }
@@ -68,6 +66,13 @@ void setHeight(String cmd) {
   servo.replace("height", "");
   int height = servo.toInt();
   spider->setHeight(height);
+}
+
+void setRotation(String cmd) {
+  int i = 0;
+  cmd.replace("rotate", "");
+  int angle = cmd.toInt();
+  spider->setRotation(angle);
 }
 
 void set(String cmd) {

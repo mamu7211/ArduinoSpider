@@ -18,8 +18,8 @@ SpiderLeg::SpiderLeg(String prefix, int firstPin, bool isInverted) {
   _isInverted = isInverted;
   name = prefix + "-Leg";
 
-  servoRotate->setBounds(65, 115);
-  servoRotate = SpiderServo::create(prefix + "-Rotate", firstPin, isInverted, 90);
+  servoRotate = SpiderServo::create(prefix + "-Rotate", firstPin, false, 90);
+  servoRotate->setBounds(65, 115);  
   delay(500);
 
   servoMid = SpiderServo::create(prefix + "-Mid", firstPin + 1, isInverted, 180);
