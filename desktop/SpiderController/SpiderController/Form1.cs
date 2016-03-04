@@ -72,7 +72,7 @@ namespace SpiderController
             }
 
             var state = _controller.GetState().Gamepad;
-            var deltaHeight = (int) ( state.RightThumbY / 32600.0 * 10.0);
+            var deltaHeight = (int) ( state.RightThumbY / 32600.0 * 20.0);
             if (Math.Abs(deltaHeight) < 5) deltaHeight = 0;
             _height += deltaHeight;
             _height = clamp(_height, 0, 100);

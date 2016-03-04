@@ -12,8 +12,6 @@ String SPIDER_STATE_ENUM_STRING[] {
   "ROLE"
 };
 
-#define LEG_COUNT 4
-
 Spider* Spider::create() {
   Spider *spider = new Spider();
   return spider;
@@ -22,18 +20,27 @@ Spider* Spider::create() {
 Spider::Spider() {
   _frontRight = SpiderLeg::createRightLeg("Front", 38);
   delay(250);
+  _midRight = SpiderLeg::createRightLeg("Mid", 30);
+  delay(250);
   _backRight = SpiderLeg::createRightLeg("Back", 26);
   delay(250);
+  
   _frontLeft = SpiderLeg::createLeftLeg("Front", 42);
+  delay(250);
+  _midLeft = SpiderLeg::createLeftLeg("Mid", 34);
   delay(250);
   _backLeft = SpiderLeg::createLeftLeg("Back", 22);
   delay(250);
 
-  _legs[0] = _frontRight;
-  _legs[1] = _frontLeft;
-  _legs[2] = _backRight;
-  _legs[3] = _backLeft;
 
+
+  _legs[0] = _frontRight;
+  _legs[1] = _frontLeft;  
+  _legs[2] = _midRight;
+  _legs[3] = _midLeft;
+  _legs[4] = _backRight;
+  _legs[5] = _backLeft;
+  
   _selectedLeg = _frontRight;
 }
 

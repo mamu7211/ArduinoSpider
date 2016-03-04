@@ -34,7 +34,7 @@ void commands() {
     }
   }
 
-  spider->update(1);
+  spider->update(0);
 }
 
 void setState(String cmd) {

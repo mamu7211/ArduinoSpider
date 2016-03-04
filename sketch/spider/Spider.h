@@ -1,15 +1,20 @@
 #include "SpiderLeg.h"
 #include "SpiderState.h"
 
+#define LEG_COUNT 6
+
 class Spider {
     // Attributes =====================================
   public:
     SpiderLeg* _selectedLeg;
 
   private:
-    SpiderLeg* _legs[4];
+    SpiderLeg* _legs[LEG_COUNT];
+    
     SpiderLeg* _frontRight;
     SpiderLeg* _frontLeft;
+    SpiderLeg* _midRight;
+    SpiderLeg* _midLeft;
     SpiderLeg* _backRight;
     SpiderLeg* _backLeft;
     
